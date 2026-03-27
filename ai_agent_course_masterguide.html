@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agents & AIFF — Complete Study Guide</title>
+<style>
+:root {
+  /* Colors */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-background-info: #e8f4fd;
+  --color-background-warning: #fff8e6;
+  --color-background-success: #e8f8f0;
+  
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #5a5a7a;
+  --color-text-tertiary: #9a9ab0;
+  --color-text-info: #1e6f9f;
+  --color-text-warning: #b56a0a;
+  --color-text-success: #1d7a56;
+  
+  --color-border-primary: #d0d0e0;
+  --color-border-secondary: #e5e5f0;
+  --color-border-tertiary: #f0f0f5;
+  --color-border-info: #a8d8f0;
+  --color-border-warning: #f0c860;
+  --color-border-success: #68d8a0;
+  
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Border Radius */
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background-primary: #0d1117;
+    --color-background-secondary: #161b22;
+    --color-background-info: #1a2a3a;
+    --color-background-warning: #2a2010;
+    --color-background-success: #102a20;
+    
+    --color-text-primary: #e8e8e8;
+    --color-text-secondary: #a0a0b0;
+    --color-text-tertiary: #6a6a7a;
+    --color-text-info: #7ec8e8;
+    --color-text-warning: #f0c860;
+    --color-text-success: #68d8a0;
+    
+    --color-border-primary: #303040;
+    --color-border-secondary: #252535;
+    --color-border-tertiary: #1a1a25;
+    --color-border-info: #2a4a60;
+    --color-border-warning: #4a3a10;
+    --color-border-success: #1a4a30;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.master {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 0 2rem;
+  box-shadow: var(--shadow-md);
+  background: var(--color-background-primary);
+  border-radius: var(--border-radius-xl);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.hero {
+  text-align: center;
+  padding: 2.5rem 1rem 2rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  background: linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-primary) 100%);
+}
+
+.hero h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+  letter-spacing: -0.5px;
+}
+
+.hero p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 1.25rem;
+  justify-content: center;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+}
+
+.nav-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  border-color: var(--color-border-info);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-btn.active {
+  background: var(--color-text-info);
+  color: #ffffff;
+  border-color: var(--color-text-info);
+  box-shadow: var(--shadow-sm);
+}
+
+.section {
+  display: none;
+  padding: 2rem 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section.visible {
+  display: block;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+}
+
+.section-sub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.75rem;
+  line-height: 1.7;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  border: 0.5px solid var(--color-border-tertiary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-primary);
+}
+
+.card-icon {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text-primary);
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.card.highlight {
+  border-color: var(--color-border-info);
+  background: var(--color-background-info);
+}
+
+.card.highlight .card-title {
+  color: var(--color-text-info);
+}
+
+.pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin: 2px 2px 2px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.pill.blue { background: var(--color-background-info); color: var(--color-text-info); }
+.pill.teal { background: rgba(29,158,117,0.12); color: #0f6e56; }
+.pill.amber { background: var(--color-background-warning); color: var(--color-text-warning); }
+.pill.coral { background: rgba(216,90,48,0.12); color: #993c1d; }
+.pill.purple { background: rgba(127,119,221,0.15); color: #3C3489; }
+
+.row-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .row-compare { grid-template-columns: 1fr; }
+}
+
+.compare-card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  border: 0.5px solid var(--color-border-tertiary);
+  transition: all 0.2s ease;
+}
+
+.compare-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.compare-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-card ul {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  padding-left: 16px;
+  line-height: 1.9;
+}
+
+.compare-card.old { border-left: 3px solid var(--color-border-warning); }
+.compare-card.new { border-left: 3px solid var(--color-border-success); }
+
+.divider-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-tertiary);
+  margin: 1.5rem 0 1rem;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.divider-label::before,
+.divider-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 0.5px;
+  background: var(--color-border-tertiary);
+}
+
+.divider-label::before { left: 0; }
+.divider-label::after { right: 0; }
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+  background: var(--color-background-warning);
+  color: var(--color-text-warning);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 1.25rem 0;
+  padding: 0.5rem 0;
+}
+
+.flow-node {
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.flow-node:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.flow-arrow {
+  color: var(--color-text-tertiary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.flow-node.active {
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  border-color: var(--color-border-info);
+}
+
+.flow-node.purple {
+  background: rgba(127,119,221,0.12);
+  color: #3C3489;
+  border-color: rgba(127,119,221,0.3);
+}
+
+.flow-node.amber {
+  background: var(--color-background-warning);
+  color: var(--color-text-warning);
+  border-color: var(--color-border-warning);
+}
+
+.flow-node.teal {
+  background: rgba(29,158,117,0.12);
+  color: #0f6e56;
+  border-color: rgba(29,158,117,0.3);
+}
+
+.flow-node.coral {
+  background: rgba(216,90,48,0.1);
+  color: #993c1d;
+  border-color: rgba(216,90,48,0.3);
+}
+
+.layers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 1.25rem 0;
+}
+
+.layer {
+  border-radius: var(--border-radius-md);
+  padding: 14px 16px;
+  border: 0.5px solid var(--color-border-tertiary);
+  transition: all 0.2s ease;
+}
+
+.layer:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.layer-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.layer-items {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.layer-tag {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.layer.l1 {
+  background: rgba(127,119,221,0.08);
+  border-color: rgba(127,119,221,0.25);
+}
+
+.layer.l2 {
+  background: rgba(29,158,117,0.08);
+  border-color: rgba(29,158,117,0.25);
+}
+
+.layer.l3 {
+  background: var(--color-background-warning);
+  border-color: var(--color-border-warning);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.25rem 0;
+}
+
+.tl-item {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 1.75rem;
+  position: relative;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  width: 0.5px;
+  height: calc(100% - 16px);
+  background: var(--color-border-tertiary);
+}
+
+.tl-item:last-child::before {
+  display: none;
+}
+
+.tl-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.tl-dot:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.tl-body {
+  flex: 1;
+  padding-top: 6px;
+}
+
+.tl-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--color-text-primary);
+}
+
+.tl-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 1.25rem;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.summary-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-table td {
+  padding: 12px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  vertical-align: top;
+}
+
+.summary-table tr:last-child td {
+  border-bottom: none;
+}
+
+.summary-table tr:hover td {
+  background: var(--color-background-secondary);
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--color-border-tertiary);
+  border-radius: 3px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-text-info) 0%, #5ec8e8 100%);
+  transition: width 0.5s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+</style>
+</head>
+<body>
+<div class="master">
+<div class="hero">
+  <h1>AI Agents & AIFF — Complete Study Guide</h1>
+  <p>17 topics covered · Click any chapter to review</p>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('overview')">Overview</button>
+  <button class="nav-btn" onclick="show('ux')">UX vs Intent</button>
+  <button class="nav-btn" onclick="show('five')">Five Powers</button>
+  <button class="nav-btn" onclick="show('stack')">AI Stack</button>
+  <button class="nav-btn" onclick="show('mcp')">MCP</button>
+  <button class="nav-btn" onclick="show('evolution')">Evolution</button>
+  <button class="nav-btn" onclick="show('aiff')">AIFF Standards</button>
+  <button class="nav-btn" onclick="show('skills')">Skills & AGENTS</button>
+  <button class="nav-btn" onclick="show('mental')">Mental Models</button>
+  <button class="nav-btn" onclick="show('cheatsheet')">Cheat Sheet</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="s-overview" class="section visible">
+  <div class="section-title">All Topics at a Glance</div>
+  <div class="section-sub">Your complete AI Agents course — 17 topics across 2 chapters. Click any chapter in the nav to dive in.</div>
+  <div class="card-grid">
+    <div class="card highlight" onclick="show('ux')">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">UX → Intent Paradigm</div>
+      <div class="card-desc">How AI replaces interfaces with conversations. Hotel booking: 14 steps → 3 messages.</div>
+    </div>
+    <div class="card" onclick="show('five')">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Five Powers</div>
+      <div class="card-desc">See · Hear · Reason · Act · Remember — the five core abilities of any AI agent.</div>
+    </div>
+    <div class="card" onclick="show('stack')">
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">Modern AI Stack</div>
+      <div class="card-desc">3-layer architecture: Frontier Models → AI-First IDEs → Agent Skills.</div>
+    </div>
+    <div class="card" onclick="show('mcp')">
+      <div class="card-icon">🔌</div>
+      <div class="card-title">Model Context Protocol</div>
+      <div class="card-desc">USB of AI. Solves M×N tool problem. Bidirectional communication.</div>
+    </div>
+    <div class="card" onclick="show('evolution')">
+      <div class="card-icon">📈</div>
+      <div class="card-title">AI Evolution</div>
+      <div class="card-desc">Predictive → Generative → Agentic. The 2024 → 2026 shift in development paradigm.</div>
+    </div>
+    <div class="card" onclick="show('aiff')">
+      <div class="card-icon">🏛️</div>
+      <div class="card-title">AIFF Standards</div>
+      <div class="card-desc">Open standards layer. Write once, deploy everywhere. Kills vendor lock-in.</div>
+    </div>
+    <div class="card" onclick="show('skills')">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Skills & AGENTS.md</div>
+      <div class="card-desc">SKILL.md format, behavior rules, goose reference agent, MCP Apps UI.</div>
+    </div>
+    <div class="card" onclick="show('mental')">
+      <div class="card-icon">💡</div>
+      <div class="card-title">Mental Models</div>
+      <div class="card-desc">USB analogy, Portable AI, Digital FTE, Skill Era vs Prompt Era.</div>
+    </div>
+  </div>
+  <div class="divider-label">Course Progress</div>
+  <div style="font-size:12px;color:var(--color-text-secondary);display:flex;justify-content:space-between;margin-top:8px"><span>17 topics covered</span><span>2 chapters</span></div>
+  <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+</div>
+
+<!-- UX vs INTENT -->
+<div id="s-ux" class="section">
+  <div class="section-title">UX vs Intent Paradigm</div>
+  <div class="section-sub">The most fundamental shift in AI: from clicking through interfaces to expressing intent in natural language.</div>
+  
+  <div class="row-compare">
+    <div class="compare-card old">
+      <h3>Traditional UX <span class="badge">OLD</span></h3>
+      <ul>
+        <li>User → Interface → Action</li>
+        <li>User must know the steps</li>
+        <li>Fixed navigation paths</li>
+        <li>14+ clicks to book a hotel</li>
+        <li>User drives every micro-step</li>
+      </ul>
+    </div>
+    <div class="compare-card new">
+      <h3>Agentic UX <span class="badge" style="background:var(--color-background-success);color:var(--color-text-success)">NEW</span></h3>
+      <ul>
+        <li>User Intent → Agent → Actions</li>
+        <li>User just states the goal</li>
+        <li>Agent plans the path</li>
+        <li>3 conversational messages</li>
+        <li>Agent drives execution</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider-label">Hotel Booking — Flow Comparison</div>
+  
+  <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:10px 0 4px">Traditional (14 steps)</div>
+  <div class="flow-row">
+    <div class="flow-node">Open browser</div><div class="flow-arrow">→</div>
+    <div class="flow-node">Search hotel</div><div class="flow-arrow">→</div>
+    <div class="flow-node">Filter dates</div><div class="flow-arrow">→</div>
+    <div class="flow-node">Compare prices</div><div class="flow-arrow">→</div>
+    <div class="flow-node">Read reviews</div><div class="flow-arrow">→</div>
+    <div class="flow-node">Select room</div><div class="flow-arrow">→</div>
+    <div class="flow-node">Enter details</div><div class="flow-arrow">→</div>
+    <div class="flow-node amber">Pay</div>
+  </div>
+
+  <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:14px 0 4px">Agentic (3 messages)</div>
+  <div class="flow-row">
+    <div class="flow-node active">"Book me a hotel in Lahore, this weekend, under 10k"</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node teal">Agent executes all 14 steps</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node active">"Confirm?"</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node teal">Done ✓</div>
+  </div>
+
+  <div class="divider-label">Core Concept</div>
+  <div class="card" style="margin-top:10px">
+    <div class="card-title">Autonomous Orchestration</div>
+    <div class="card-desc" style="margin-top:6px">The agent doesn't just respond — it plans a sequence of tool calls, handles errors, loops when needed, and delivers a final result. The user only sees intent in and outcome out.</div>
+  </div>
+</div>
+
+<!-- FIVE POWERS -->
+<div id="s-five" class="section">
+  <div class="section-title">Five Powers of AI Agents</div>
+  <div class="section-sub">Every AI agent is built from these five foundational capabilities. Together, they enable full autonomous task execution.</div>
+
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+    <div class="card">
+      <div class="card-icon">👁️</div>
+      <div class="card-title">See</div>
+      <div class="card-desc">Visual Understanding — images, screenshots, documents, UI states</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">👂</div>
+      <div class="card-title">Hear</div>
+      <div class="card-desc">Audio Processing — voice commands, transcription, tone recognition</div>
+    </div>
+    <div class="card highlight">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Reason</div>
+      <div class="card-desc">Decision Making — planning, analysis, choosing the right tool or action</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Act</div>
+      <div class="card-desc">Execution — calling APIs, running code, writing files, using tools</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💾</div>
+      <div class="card-title">Remember</div>
+      <div class="card-desc">Memory & Context — conversation history, user preferences, past results</div>
+    </div>
+  </div>
+
+  <div class="divider-label">How They Combine — Orchestration Flow</div>
+  <div style="font-size:12px;color:var(--color-text-secondary);margin:8px 0">Example: Voice task → Agent executes → Verifies result</div>
+  
+  <div class="flow-row">
+    <div class="flow-node purple">👂 Hear</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node active">🧠 Reason</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node teal">💾 Remember</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node coral">⚡ Act</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node amber">👁️ See</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node active">🧠 Reason again</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node coral">⚡ Act again</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node teal">💾 Save</div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;background:var(--color-background-info);border-color:var(--color-border-info)">
+    <div class="card-title" style="color:var(--color-text-info)">Key Insight</div>
+    <div class="card-desc" style="margin-top:4px">Reason is the central orchestrator — it reads outputs from See/Hear/Remember and decides what to Act on next. The loop continues until the task is complete.</div>
+  </div>
+</div>
+
+<!-- STACK -->
+<div id="s-stack" class="section">
+  <div class="section-title">Modern AI Stack — 3 Layers</div>
+  <div class="section-sub">The full architecture from raw model capability down to deployable agent skills. Each layer builds on the one below it.</div>
+
+  <div class="layers">
+    <div class="layer l1">
+      <div class="layer-title">Layer 1 — Frontier Models</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0 8px">Raw intelligence. Native reasoning and generation.</div>
+      <div class="layer-items">
+        <span class="layer-tag">Claude (Anthropic)</span>
+        <span class="layer-tag">GPT-4 (OpenAI)</span>
+        <span class="layer-tag">Gemini (Google)</span>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:18px;color:var(--color-text-tertiary);padding:2px 0">↓</div>
+    <div class="layer l2">
+      <div class="layer-title">Layer 2 — AI-First IDEs</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0 8px">Context orchestration. Wires tools, code, and models together.</div>
+      <div class="layer-items">
+        <span class="layer-tag">Cursor</span>
+        <span class="layer-tag">VS Code</span>
+        <span class="layer-tag">Windsurf</span>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:18px;color:var(--color-text-tertiary);padding:2px 0">↓</div>
+    <div class="layer l3">
+      <div class="layer-title">Layer 3 — Agent Skills</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin:4px 0 8px">Modular capabilities. Packaged expertise that agents can load and run.</div>
+      <div class="layer-items">
+        <span class="layer-tag">SKILL.md files</span>
+        <span class="layer-tag">Domain modules</span>
+        <span class="layer-tag">Reusable agents</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">2024 vs 2026 Shift</div>
+  <div class="row-compare" style="margin-top:10px">
+    <div class="compare-card old">
+      <h3>2024 — Tool Silos</h3>
+      <ul>
+        <li>Each AI tool is isolated</li>
+        <li>Proprietary integrations</li>
+        <li>Vendor lock-in everywhere</li>
+        <li>Prompt-based everything</li>
+        <li>No portability</li>
+      </ul>
+    </div>
+    <div class="compare-card new">
+      <h3>2026 — Modular Stack</h3>
+      <ul>
+        <li>Open standards (MCP, AIFF)</li>
+        <li>Portable agent components</li>
+        <li>Skills plug in anywhere</li>
+        <li>Constraint engineering</li>
+        <li>Write once, run everywhere</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- MCP -->
+<div id="s-mcp" class="section">
+  <div class="section-title">Model Context Protocol (MCP)</div>
+  <div class="section-sub">The universal connector for AI agents. Imagine USB — one standard port that works with any device. MCP does the same for AI tools.</div>
+
+  <div class="divider-label">The M×N Problem MCP Solves</div>
+  <div class="row-compare" style="margin-top:10px">
+    <div class="compare-card old">
+      <h3>Before MCP — M×N Chaos</h3>
+      <ul>
+        <li>5 models × 10 tools = 50 integrations</li>
+        <li>Each pair needs custom code</li>
+        <li>Breaking changes everywhere</li>
+        <li>Maintenance nightmare</li>
+      </ul>
+    </div>
+    <div class="compare-card new">
+      <h3>After MCP — M+N Clean</h3>
+      <ul>
+        <li>5 models + 10 tools = 15 connectors</li>
+        <li>One standard protocol</li>
+        <li>Any model ↔ any tool</li>
+        <li>Add once, use everywhere</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider-label">What MCP Exposes</div>
+  <div class="card-grid" style="margin-top:10px">
+    <div class="card">
+      <div class="card-icon">🛠️</div>
+      <div class="card-title">Tools</div>
+      <div class="card-desc">Functions the agent can call — search, write file, send email, query DB</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📄</div>
+      <div class="card-title">Resources</div>
+      <div class="card-desc">Data the agent can read — files, database rows, API responses</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <div class="card-title">Prompts</div>
+      <div class="card-desc">Pre-built instruction templates shared by the server</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;background:var(--color-background-warning);border-color:var(--color-border-warning)">
+    <div class="card-title" style="color:var(--color-text-warning)">Bidirectional Communication — Sampling</div>
+    <div class="card-desc" style="margin-top:4px">Unlike simple APIs, MCP supports <strong>sampling</strong>: the server can ask the model to generate content mid-task. It's a two-way channel, not just client-to-server.</div>
+  </div>
+</div>
+
+<!-- EVOLUTION -->
+<div id="s-evolution" class="section">
+  <div class="section-title">Evolution of AI</div>
+  <div class="section-sub">Three distinct eras of AI capability — each one enabled by breakthroughs in the previous era.</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">📊</div>
+      <div class="tl-body">
+        <div class="tl-label">Predictive AI</div>
+        <div class="tl-desc">Learns patterns from data to forecast outcomes. Spam filters, recommendation engines, price prediction. Narrow but highly accurate in its domain.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">✍️</div>
+      <div class="tl-body">
+        <div class="tl-label">Generative AI</div>
+        <div class="tl-desc">Creates new content — text, images, code, audio. GPT-4, Midjourney, Claude. Can answer questions, write essays, generate code from natural language.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🤖</div>
+      <div class="tl-body">
+        <div class="tl-label">Agentic AI</div>
+        <div class="tl-desc">Acts autonomously to complete multi-step tasks. Uses tools, loops, plans. Doesn't just respond — it executes. This is where we are in 2025-2026.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">Skill Era vs Prompt Era</div>
+  <div class="row-compare" style="margin-top:10px">
+    <div class="compare-card old">
+      <h3>Prompt Era <span class="badge">Old</span></h3>
+      <ul>
+        <li>Long system prompts</li>
+        <li>Fragile, brittle instructions</li>
+        <li>Hard to reuse or share</li>
+        <li>Prompt engineering as craft</li>
+      </ul>
+    </div>
+    <div class="compare-card new">
+      <h3>Skill Era <span class="badge" style="background:var(--color-background-success);color:var(--color-text-success)">Now</span></h3>
+      <ul>
+        <li>Modular SKILL.md files</li>
+        <li>Version controlled, portable</li>
+        <li>Shareable across teams</li>
+        <li>Constraint engineering</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- AIFF -->
+<div id="s-aiff" class="section">
+  <div class="section-title">AIFF Standards</div>
+  <div class="section-sub">Agentic AI Foundation Framework — open standards that let AI agents work across any platform, tool, or vendor without lock-in.</div>
+
+  <div class="card-grid">
+    <div class="card highlight">
+      <div class="card-icon">🏛️</div>
+      <div class="card-title">AIFF Core</div>
+      <div class="card-desc">Open standards body for AI agents. "Write once, deploy everywhere." Vendor-neutral specification.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔌</div>
+      <div class="card-title">MCP</div>
+      <div class="card-desc">Tool connection protocol. Part of the AIFF ecosystem. Resources + Tools + Prompts.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <div class="card-title">AGENTS.md</div>
+      <div class="card-desc">Behavior rules file. Like .gitignore but for AI behavior — build, style, security rules.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Agent Skills</div>
+      <div class="card-desc">SKILL.md format for packaging expertise. Progressive disclosure of capability.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🦆</div>
+      <div class="card-title">goose</div>
+      <div class="card-desc">Open-source reference agent. Production architecture patterns you can learn from and fork.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-title">MCP Apps Extension</div>
+      <div class="card-desc">UI layer for agents — buttons, charts, forms. Takes agents beyond plain chat.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛍️</div>
+      <div class="card-title">Apps SDK</div>
+      <div class="card-desc">ChatGPT ecosystem distribution model. Marketplace for agentic applications.</div>
+    </div>
+  </div>
+
+  <div class="divider-label">Why AIFF Matters</div>
+  <div class="flow-row" style="justify-content:center">
+    <div class="flow-node coral">Vendor Lock-in Problem</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node active">AIFF Open Standards</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node teal">Portable AI Systems</div>
+  </div>
+</div>
+
+<!-- SKILLS & AGENTS -->
+<div id="s-skills" class="section">
+  <div class="section-title">Skills, AGENTS.md & goose</div>
+  <div class="section-sub">The practical layer of the AI stack — how expertise is packaged, behavior is governed, and production agents are structured.</div>
+
+  <div class="divider-label">AGENTS.md — Behavior Rules File</div>
+  <div class="card-grid" style="margin-top:10px">
+    <div class="card">
+      <div class="card-title">Build Rules</div>
+      <div class="card-desc" style="margin-top:4px">How to run the project, install deps, compile, test. Agent reads this before coding.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Style Rules</div>
+      <div class="card-desc" style="margin-top:4px">Code formatting, naming conventions, file structure. Keeps output consistent.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Security Rules</div>
+      <div class="card-desc" style="margin-top:4px">What NOT to do. Never expose API keys, never delete prod data, never skip auth.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Hierarchy</div>
+      <div class="card-desc" style="margin-top:4px">Global → Project → Directory → File. More specific rules override broader ones.</div>
+    </div>
+  </div>
+
+  <div class="divider-label">SKILL.md — Expertise Packaging</div>
+  <div class="card" style="margin-top:10px">
+    <div class="card-title">How a SKILL.md works</div>
+    <div class="card-desc" style="margin-top:6px;line-height:1.8">
+      1. Agent encounters a task (e.g. "create a Word doc")<br>
+      2. Checks if a relevant SKILL.md exists<br>
+      3. Reads the skill file for best practices<br>
+      4. Executes the task using the skill's guidance<br>
+      5. Output is professional-grade, not generic AI output
+    </div>
+  </div>
+
+  <div class="divider-label">goose — Reference Agent</div>
+  <div class="card" style="margin-top:10px;background:var(--color-background-info);border-color:var(--color-border-info)">
+    <div class="card-title" style="color:var(--color-text-info)">Open-source production blueprint</div>
+    <div class="card-desc" style="margin-top:4px">goose is Block's open-source agent that implements the full AIFF stack — MCP, AGENTS.md, Skills, and production patterns. Study it to understand real-world agent architecture without building from scratch.</div>
+  </div>
+</div>
+
+<!-- MENTAL MODELS -->
+<div id="s-mental" class="section">
+  <div class="section-title">Big Concepts & Mental Models</div>
+  <div class="section-sub">The conceptual frameworks that tie everything together. These are the ideas you'll keep returning to.</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">🔌</div>
+      <div class="tl-body">
+        <div class="tl-label">USB Analogy — Standardization</div>
+        <div class="tl-desc">Before USB: every device had its own port. After USB: one standard, everything works. MCP is USB for AI — one protocol, any model connects to any tool.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🆚</div>
+      <div class="tl-body">
+        <div class="tl-label">Skills vs MCP — Knowledge vs Connection</div>
+        <div class="tl-desc">MCP is about <strong>connecting</strong> agents to tools (infrastructure). Skills are about <strong>knowing how</strong> to use those tools well (expertise). You need both.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">✈️</div>
+      <div class="tl-body">
+        <div class="tl-label">Portable AI Systems</div>
+        <div class="tl-desc">Your agent, its skills, and its tools should move freely between Claude, GPT, Gemini — and between Cursor, VS Code, goose. No platform should own your stack.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">👤</div>
+      <div class="tl-body">
+        <div class="tl-label">Digital FTE Concept</div>
+        <div class="tl-desc">An agent with the right Five Powers, connected via MCP to relevant tools, guided by AGENTS.md rules and loaded with domain SKILL.md files = a Digital Full-Time Employee. A virtual worker that never sleeps.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHEAT SHEET -->
+<div id="s-cheatsheet" class="section">
+  <div class="section-title">Revision Cheat Sheet</div>
+  <div class="section-sub">One-line summary of every topic. Perfect for last-minute revision before a quiz or class.</div>
+
+  <table class="summary-table">
+    <thead>
+      <tr><th>Topic</th><th>One-line Summary</th><th>Tag</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>UX → Intent</td><td>Interface khatam, agent conversation start</td><td><span class="pill blue">Core</span></td></tr>
+      <tr><td>Five Powers</td><td>See · Hear · Reason · Act · Remember</td><td><span class="pill blue">Core</span></td></tr>
+      <tr><td>Orchestration</td><td>Agent loops through powers until task done</td><td><span class="pill blue">Core</span></td></tr>
+      <tr><td>AI Stack</td><td>Models → IDEs → Skills (3 layers)</td><td><span class="pill teal">Stack</span></td></tr>
+      <tr><td>Predictive AI</td><td>Forecasts from patterns</td><td><span class="pill amber">Evolution</span></td></tr>
+      <tr><td>Generative AI</td><td>Creates new content</td><td><span class="pill amber">Evolution</span></td></tr>
+      <tr><td>Agentic AI</td><td>Acts autonomously with tools</td><td><span class="pill amber">Evolution</span></td></tr>
+      <tr><td>2024 → 2026</td><td>Tool silos → Modular open stack</td><td><span class="pill amber">Evolution</span></td></tr>
+      <tr><td>Skill Era</td><td>SKILL.md replaces long system prompts</td><td><span class="pill amber">Evolution</span></td></tr>
+      <tr><td>MCP</td><td>USB of AI — universal tool connector</td><td><span class="pill purple">AIFF</span></td></tr>
+      <tr><td>AIFF</td><td>Open standards — write once, run anywhere</td><td><span class="pill purple">AIFF</span></td></tr>
+      <tr><td>AGENTS.md</td><td>AI behavior rules file for projects</td><td><span class="pill purple">AIFF</span></td></tr>
+      <tr><td>SKILL.md</td><td>Packaged expertise for agents to load</td><td><span class="pill purple">AIFF</span></td></tr>
+      <tr><td>goose</td><td>Open-source reference agent blueprint</td><td><span class="pill purple">AIFF</span></td></tr>
+      <tr><td>MCP Apps</td><td>UI layer beyond chat — buttons, charts</td><td><span class="pill purple">AIFF</span></td></tr>
+      <tr><td>Skills vs MCP</td><td>Knowledge vs Connection — need both</td><td><span class="pill coral">Mental</span></td></tr>
+      <tr><td>Digital FTE</td><td>Agent with all powers = virtual worker</td><td><span class="pill coral">Mental</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));
+  document.getElementById('s-'+id).classList.add('visible');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
